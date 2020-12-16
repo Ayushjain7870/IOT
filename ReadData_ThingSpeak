@@ -1,0 +1,35 @@
+from tkinter import *
+import json
+channel_id = ''
+import urllib.request as u
+url = f"https://api.thingspeak.com/channels/{channel_id}/feeds.json?results=2"
+data= u.urlopen(url)
+s = data.read()
+data_dict = json.loads(s)
+read_channel = data_dict['feeds']
+length_of_list = len(read_channel)
+my_list =[]
+print(f"Lenght of list is {length_of_list}")
+for i in range(1,length_of_list+1):
+    fields = read_channel[1]
+    data1 = fields['field1']
+    data2 = fields['field2']
+    data3 = fields['field3']
+    data4 = fields['field4']
+    my_list.append(data1)
+    my_list.append(data2)
+    my_list.append(data3)
+    my_list.append(data4)
+    print("Field1: ",data1)
+    print("Field2: ",data2)
+    print("Field3: ",data3)
+    print("Field4: ",data4)
+info='Python Code to get data from url and display it using the Tkinter widget'
+print("Final list is",my_list)
+root = Tk()
+root.geometry("300x300")
+root.title("ThingSpeak_Data")
+Label(root, text=info,fg='red').pack()
+Label(root, text=my_list,fg='red').pack()
+root.mainloop()
+
